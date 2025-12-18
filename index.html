@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PTPMNM - GitHub CI/CD Demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            max-width: 800px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        
+        .mssv-badge {
+            background: #4CAF50;
+            color: white;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-size: 1.8em;
+            font-weight: bold;
+            margin: 30px auto;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.4);
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            border-left: 5px solid #007bff;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: left;
+            border-radius: 10px;
+        }
+        
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 10px;
+            background: #e9ecef;
+            border-radius: 10px;
+        }
+        
+        .step-number {
+            background: #007bff;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+        
+        .success {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #c3e6cb;
+        }
+        
+        .loading {
+            background: #fff3cd;
+            color: #856404;
+            border: 2px solid #ffeaa7;
+        }
+        
+        .deploy-info {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px dashed #dee2e6;
+        }
+        
+        .tech-stack {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .tech-item {
+            background: #e9ecef;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: 500;
+        }
+        
+        footer {
+            margin-top: 40px;
+            color: #6c757d;
+            font-size: 0.9em;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .mssv-badge {
+                font-size: 1.4em;
+                padding: 12px 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Bài Tập PTPMNM - GitHub CI/CD</h1>
+        <p class="subtitle">Deploy tự động với GitHub Actions + Vercel</p>
+        
+        <div class="mssv-badge" id="mssv">
+            MSSV: DH52201115
+        </div>
+        
+        <div class="info-box">
+            <h3>📋 Thông tin project:</h3>
+            <p><strong>Môn học:</strong> Phát triển phần mềm mã nguồn mở</p>
+            <p><strong>Nội dung:</strong> Triển khai CI/CD với GitHub Actions</p>
+            <p><strong>Platform:</strong> Vercel (Frontend Cloud)</p>
+        </div>
+        
+        <div class="info-box">
+            <h3>🔧 Quy trình CI/CD:</h3>
+            <div class="step">
+                <div class="step-number">1</div>
+                <div>Push code lên GitHub → Kích hoạt workflow</div>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <div>GitHub Actions chạy test và build</div>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <div>Tự động deploy lên Vercel</div>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <div>Kiểm tra kết quả tại URL Vercel</div>
+            </div>
+        </div>
+        
+        <div class="status loading" id="deployStatus">
+            🔄 Đang kiểm tra trạng thái deploy...
+        </div>
+        
+        <div class="deploy-info">
+            <h3>🌐 Thông tin deploy:</h3>
+            <p><strong>Commit Hash:</strong> <span id="commitHash">Loading...</span></p>
+            <p><strong>Thời gian deploy:</strong> <span id="deployTime">Loading...</span></p>
+            <p><strong>Build Status:</strong> <span id="buildStatus">Loading...</span></p>
+        </div>
+        
+        <div class="tech-stack">
+            <div class="tech-item">HTML5</div>
+            <div class="tech-item">CSS3</div>
+            <div class="tech-item">JavaScript</div>
+            <div class="tech-item">GitHub Actions</div>
+            <div class="tech-item">Vercel</div>
+            <div class="tech-item">CI/CD</div>
+        </div>
+        
+        <footer>
+            <p>© 2024 - Bài tập thực hành PTPMNM</p>
+            <p>Deploy tự động khi push code lên main branch</p>
+        </footer>
+    </div>
+
+    <script>
+        // Cập nhật thông tin deploy
+        document.addEventListener('DOMContentLoaded', function() {
+            // Giả lập thông tin deploy
+            setTimeout(() => {
+                document.getElementById('deployStatus').className = 'status success';
+                document.getElementById('deployStatus').innerHTML = '✅ Đã deploy thành công lên Vercel!';
+                
+                document.getElementById('commitHash').textContent = 'a1b2c3d4';
+                document.getElementById('deployTime').textContent = new Date().toLocaleString('vi-VN');
+                document.getElementById('buildStatus').innerHTML = '<span style="color:green;">● PASSED</span>';
+            }, 1500);
+            
+            // Thêm hiệu ứng cho MSSV badge
+            const mssvBadge = document.getElementById('mssv');
+            mssvBadge.addEventListener('click', function() {
+                this.style.transform = 'scale(1.05)';
+                this.style.transition = 'transform 0.2s';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>
