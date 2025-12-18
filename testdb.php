@@ -14,5 +14,7 @@ if (!$link) {
     echo '<p>Phiên bản MySQL: ' . mysql_get_server_info() . '</p>';
 }
 
+echo "<p><strong>MSSV:</strong> DH52201115</p>";
+
 mysql_close();
 ?>
